@@ -10,15 +10,23 @@ $split_data = null;
 $message = array();
 $message_array = array();
 $success_message = null;
-$error_message = null;
+$error_message = array();
 
 if( !empty($_POST['btn_submit']) ){
-  if( $file_handle = fopen( FILENAME, "a")){
-    // "a"は追加書き込み、"w"にすると一旦リセットしてから書き込み、"r"は読み込み
-    $now_date = date("Y-m-d H:i:s");
-    $data = "'".$_POST['view_name']."','".$_POST['message']."','".$_now_date."'\n";
-    fwrite($file_handle, $data);
-    fclose($file_handle);
+  if(empty($_POST['view_name'])){
+    $error_message[] = 'タイトルを入力してください';
+  }
+  if(empty($_POST['message'])){
+    $error_message[] = 'メッセージを入力してください';
+  }
+  if(empty($error_message)){
+    if( $file_handle = fopen( FILENAME, "a")){
+      // "a"は追加書き込み、"w"にすると一旦リセットしてから書き込み、"r"は読み込み
+      $now_date = date("Y-m-d H:i:s");
+      $data = "'".$_POST['view_name']."','".$_POST['message']."','".$_now_date."'\n";
+      fwrite($file_handle, $data);
+      fclose($file_handle);
+    }
   }
 }
 if($file_handle = fopen(FILENAME,'r')){
@@ -33,7 +41,6 @@ if($file_handle = fopen(FILENAME,'r')){
   }
   fclose($file_handle);
   $success_message = 'メッセージを書き込みました。';
-  $miss_message = '書き込みに失敗しました';
 }
 ?>
 
@@ -52,8 +59,13 @@ if($file_handle = fopen(FILENAME,'r')){
 <h1>赤ちゃん掲示板</h1>
 <?php if( !empty($success_message)): ?>
   <p class = "success_message"><?php echo $success_message; ?></p>
-<?php else: ?>
-  <p class = "error_message"><?php echo $success_message; ?></p>
+<?php endif; ?>
+<?php if( !empty($error_message)): ?>
+  <ul class = "error_message">
+    <?php foreach($error_message as $value): ?>
+      <li>･<?php echo $value; ?></li>
+    <?php endforeach ?>
+  </ul>
 <?php endif; ?>
 <form method="post">
   <div>
