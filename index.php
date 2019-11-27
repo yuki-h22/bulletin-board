@@ -1,5 +1,5 @@
 <?php
-if( !enpty($_POST['btn_submit']) ){
+if( !empty($_POST['btn_submit']) ){
   var_dump($_POST);
 }
 ?>
