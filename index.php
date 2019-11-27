@@ -17,17 +17,19 @@ if( !empty($_POST['btn_submit']) ){
     $error_message[] = 'タイトルを入力してください';
   }else{
     $clean['view_name'] = htmlspecialchars($_POST['view_name'], ENT_QUOTES);
-  }
+    $clean['view_name'] = preg_replace( '/\\r\\n|\\n|\\r/', '', $clean['view_name']);
+	}
   if(empty($_POST['message'])){
     $error_message[] = 'メッセージを入力してください';
   }else{
     $clean['message'] = htmlspecialchars($_POST['message'], ENT_QUOTES);
+    $clean['message'] = preg_replace( '/\\r\\n|\\n|\\r/', '<br>', $clean['message']);
   }
   if(empty($error_message)){
     if( $file_handle = fopen( FILENAME, "a")){
       // "a"は追加書き込み、"w"にすると一旦リセットしてから書き込み、"r"は読み込み
       $now_date = date("Y-m-d H:i:s");
-      $data = "'".$_POST['view_name']."','".$_POST['message']."','".$_now_date."'\n";
+      $data = "'".$clean['view_name']."','".$clean['message']."','".$_now_date."'\n";
       fwrite($file_handle, $data);
       fclose($file_handle);
     }
