@@ -2,7 +2,16 @@
 var_dump($now_date);
 // メッセージを保存するファイルのパス設定
 define('FILENAME','./message.text');
-date_default_timezone_set('Asia/Tokyo');
+date_default_timezone_get('Asia/Tokyo');
+$now_date = null;
+$data = null;
+$file_handle = null;
+$split_data = null;
+$message = array();
+$message_array = array();
+$success_message = null;
+$error_message = null;
+
 if( !empty($_POST['btn_submit']) ){
   if( $file_handle = fopen( FILENAME, "a")){
     // "a"は追加書き込み、"w"にすると一旦リセットしてから書き込み、"r"は読み込み
@@ -11,6 +20,20 @@ if( !empty($_POST['btn_submit']) ){
     fwrite($file_handle, $data);
     fclose($file_handle);
   }
+}
+if($file_handle = fopen(FILENAME,'r')){
+  while($data = fgets($file_handle)){
+    $split_data = preg_split('/\'/',$data);
+    $message = array(
+      'view_name' => $split_data[1],
+      'message' => $split_data[3],
+      'post_date' => $split_data[5]
+    );
+    array_unshift($message_array,$message);
+  }
+  fclose($file_handle);
+  $success_message = 'メッセージを書き込みました。';
+  $miss_message = '書き込みに失敗しました';
 }
 ?>
 
@@ -27,6 +50,11 @@ if( !empty($_POST['btn_submit']) ){
 </head>
 <body>
 <h1>赤ちゃん掲示板</h1>
+<?php if( !empty($success_message)): ?>
+  <p class = "success_message"><?php echo $success_message; ?></p>
+<?php else: ?>
+  <p class = "error_message"><?php echo $success_message; ?></p>
+<?php endif; ?>
 <form method="post">
   <div>
     <label for="view_name">タイトル</label>
@@ -41,7 +69,17 @@ if( !empty($_POST['btn_submit']) ){
 
 <hr>
 <section>
-<!-- ここに投稿されたメッセージを表示 -->
+<?php if(!empty($message_array)): ?>
+<?php foreach($message_array as $value): ?>
+<article>
+  <div class="info">
+    <h2><?php echo $value['view_name']; ?></h2>
+    <time><?php echo date('Y年m月d日 H:i',strtotime($value['post_date'])); ?></time>
+  </div>
+  <p><?php echo $value['message']; ?></p>
+</article>
+<?php endforeach; ?>
+<?php endif; ?>
 </section>
 </body>
 </html>
