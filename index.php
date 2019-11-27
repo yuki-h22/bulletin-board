@@ -2,7 +2,7 @@
 var_dump($now_date);
 // メッセージを保存するファイルのパス設定
 define('FILENAME','./message.text');
-date_default_timezone_get('Asia/Tokyo');
+date_default_timezone_set('Asia/Tokyo');
 $now_date = null;
 $data = null;
 $file_handle = null;
