@@ -1,6 +1,15 @@
 <?php
+// メッセージを保存するファイルのパス設定
+define('FILENAME','./message.text');
+date_default_timezone_set('Asia/Tokyo');
 if( !empty($_POST['btn_submit']) ){
-  var_dump($_POST);
+  if( $file_handle = fopen( FILENAME, "a")){
+    // "a"は追加書き込み、"w"にすると一旦リセットしてから書き込み、"r"は読み込み
+    $now_date = date("Y-m-d H:i:s");
+    $data = "'".$_POST['view_name']."','".$_POST['message']."','".$_now_date."'\n";
+    fwrite($file_handle, $data);
+    fclose($file_handle);
+  }
 }
 ?>
 
@@ -15,7 +24,7 @@ if( !empty($_POST['btn_submit']) ){
 <form method="post">
   <div>
     <label for="view_name">タイトル</label>
-    <input id="view_name" type="text" name="view_name" value="依頼内容の概要">
+    <input id="view_name" type="text" name="view_name" value="">
   </div>
   <div>
     <label for="message">依頼内容</label>
