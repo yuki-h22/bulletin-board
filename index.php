@@ -18,7 +18,7 @@ if( !empty($_POST['btn_submit']) ){
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>ご依頼掲示板</title>
+<title>赤ちゃん掲示板</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="/sass/reset.scss">
 <link rel="stylesheet" href="/sass/toppage.scss">
@@ -26,15 +26,15 @@ if( !empty($_POST['btn_submit']) ){
 
 </head>
 <body>
-<h1>ご依頼掲示板</h1>
+<h1>赤ちゃん掲示板</h1>
 <form method="post">
   <div>
     <label for="view_name">タイトル</label>
     <input id="view_name" type="text" name="view_name" value="">
   </div>
   <div>
-    <label for="message">依頼内容</label>
-    <textarea id="message" name="message" value="依頼内容を簡潔に記入。期限をつけると返信率が上がります。"></textarea>
+    <label for="message">メッセージ</label>
+    <textarea id="message" name="message"></textarea>
   </div>
   <input type="submit" name="btn_submit" value="SEND">
 </form>
