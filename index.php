@@ -1,6 +1,5 @@
 <?php
-var_dump($now_date);
-// メッセージを保存するファイルのパス設定
+var_dump();
 define('FILENAME','./message.text');
 date_default_timezone_set('Asia/Tokyo');
 $now_date = null;
@@ -11,13 +10,18 @@ $message = array();
 $message_array = array();
 $success_message = null;
 $error_message = array();
+$clean = array();
 
 if( !empty($_POST['btn_submit']) ){
   if(empty($_POST['view_name'])){
     $error_message[] = 'タイトルを入力してください';
+  }else{
+    $clean['view_name'] = htmlspecialchars($_POST['view_name'], ENT_QUOTES);
   }
   if(empty($_POST['message'])){
     $error_message[] = 'メッセージを入力してください';
+  }else{
+    $clean['message'] = htmlspecialchars($_POST['message'], ENT_QUOTES);
   }
   if(empty($error_message)){
     if( $file_handle = fopen( FILENAME, "a")){
@@ -50,8 +54,8 @@ if($file_handle = fopen(FILENAME,'r')){
 <meta charset="utf-8">
 <title>赤ちゃん掲示板</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="/sass/reset.scss">
-<link rel="stylesheet" href="/sass/toppage.scss">
+<link rel="stylesheet" href="/stylesheet/sass/reset.scss">
+<link rel="stylesheet" href="/stylesheet/sass/toppage.scss">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
