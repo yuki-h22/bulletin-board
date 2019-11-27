@@ -1,4 +1,5 @@
 <?php
+var_dump($now_date);
 // メッセージを保存するファイルのパス設定
 define('FILENAME','./message.text');
 date_default_timezone_set('Asia/Tokyo');
@@ -18,6 +19,11 @@ if( !empty($_POST['btn_submit']) ){
 <head>
 <meta charset="utf-8">
 <title>ご依頼掲示板</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/sass/reset.scss">
+<link rel="stylesheet" href="/sass/toppage.scss">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 <body>
 <h1>ご依頼掲示板</h1>
