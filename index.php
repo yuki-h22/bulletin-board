@@ -1,5 +1,6 @@
 <?php
-var_dump();
+var_dump($cc);
+$cc = "DBの手前まで";
 define('FILENAME','./message.text');
 date_default_timezone_set('Asia/Tokyo');
 $now_date = null;
